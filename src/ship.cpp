@@ -41,12 +41,12 @@ void Ship::did_move() {
     if (x_ < 0) {
         x_ = 0;
     } else if ((x_ * width_) + width_ > window_->get_width()) {
-        x_ = (window_->get_width() / width_) - 1;
+        x_ = (window_->get_width() / width_);
     }
 
-    // Handle enemy detection
-    for (Sprite* s : sprites_) {
-        Enemy* e = dynamic_cast<Enemy*>(s);
+    // Handle enemy collision
+    for (std::shared_ptr<Sprite> s : sprites_) {
+        Enemy* e = dynamic_cast<Enemy*>(s.get());
 
         if (e) {
             if (e->get_y() > y_) {
@@ -56,15 +56,15 @@ void Ship::did_move() {
     }
 }
 
-void Ship::subscribe(Sprite* sprite) {
-    sprites_.push_back(sprite);
+void Ship::subscribe(std::shared_ptr<Sprite> sprite) {
+    sprites_.emplace_back(sprite);
 }
 
 void Ship::unsubscribe(int index) {
     sprites_.erase(sprites_.begin() + index);
 }
 
-void Ship::set_window(Window* window) {
+void Ship::set_window(std::shared_ptr<Window> window) {
     window_ = window;
 }
 

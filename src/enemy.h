@@ -12,9 +12,9 @@ public:
     void draw(SDL_Renderer* sdl_renderer) override;
     void will_move(Sprite_Attribute::Direction direction) override;
     void did_move() override;
-    void subscribe(Sprite* sprite) override;
+    void subscribe(std::shared_ptr<Sprite> sprite) override;
     void unsubscribe(int index) override;
-    void set_window(Window* window) override;
+    void set_window(std::shared_ptr<Window> window) override;
     bool should_draw() const override;
     int get_x() const override;
     int get_y() const override;
@@ -25,8 +25,8 @@ private:
     int height_;
     int width_;
     bool should_draw_;
-    Window* window_;
-    std::vector<Sprite*> sprites_;
+    std::shared_ptr<Window> window_;
+    std::vector<std::shared_ptr<Sprite>> sprites_;
 };
 
 #endif

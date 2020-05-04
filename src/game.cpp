@@ -3,21 +3,22 @@
 #include "enemy.h"
 
 Game::Game(const Settings& settings) : 
-    settings_(settings), is_running_(true), score_(0) {
-    
-    root_ = new Window{
+    settings_(settings), 
+    is_running_(true), 
+    score_(0), 
+    root_(new Window(
         settings_.height_, 
         settings_.width_, 
         settings.grid_height_, 
         settings.grid_width_, 
-        "Space Blaster"};
-
-    Ship* s = new Ship;
+        "Space Blaster")) {
+    
+    std::shared_ptr<Ship> s(new Ship);
     s->set_window(root_);
     root_->add_child(s);
 
     for (auto i = 0; i < 8; i++) {
-        Enemy* e = new Enemy;
+        std::shared_ptr<Enemy> e(new Enemy);
         e->set_window(root_);
         root_->add_child(e);
 
@@ -34,8 +35,7 @@ Game::Game(const Settings& settings) :
 }
 
 Game::~Game() {
-    delete root_;
-    SDL_Quit();
+    SDL_DestroyRenderer(sdl_renderer_);
 }
 
 void Game::run() {
@@ -74,7 +74,7 @@ void Game::run() {
 }
 
 void Game::handle_input() {
-    Sprite_Attribute::Direction direction;
+    Sprite_Attribute::Direction direction = Sprite_Attribute::Direction::none;
 
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
@@ -101,18 +101,18 @@ void Game::handle_input() {
         }
     }
 
-    for (Sprite* s : root_->get_children()) {
+    for (std::shared_ptr<Sprite> s : root_->get_children()) {
         s->will_move(direction);
     }
 }
 
 void Game::update() {
-    Sprite* ship;
+    std::shared_ptr<Sprite> ship;
     int index = 0;
-    for (Sprite* s : root_->get_children()) {
+    for (std::shared_ptr<Sprite> s : root_->get_children()) {
         s->did_move();
 
-        if(dynamic_cast<Ship*>(s)) {
+        if(dynamic_cast<Ship*>(s.get())) {
             ship = s;
         }
 
@@ -132,7 +132,7 @@ void Game::update() {
             }
 
             // Add a new enemy to the game
-            Enemy* e = new Enemy;
+            std::shared_ptr<Enemy> e(new Enemy);
             e->set_window(root_);
             root_->add_child(e);
 
@@ -148,7 +148,7 @@ void Game::draw() {
   SDL_RenderClear(sdl_renderer_);
 
   // Draw sprites
-  for (Sprite* s : root_->get_children()) {
+  for (std::shared_ptr<Sprite> s : root_->get_children()) {
       if (s->should_draw()) {
         s->draw(sdl_renderer_);
       }

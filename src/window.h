@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include <string>
+#include <memory>
 #include <vector>
 
 #include "sprite.h"
@@ -17,12 +18,12 @@ public:
     Window(Window&& source); // Move Constructor
     Window& operator=(Window&& source); // Move Assignment
     SDL_Window* get_sdl_window() const;
-    void add_child(Sprite* sprite);
+    void add_child(std::shared_ptr<Sprite> sprite);
     std::size_t get_height() const;
     std::size_t get_width() const;
     std::size_t get_grid_height() const;
     std::size_t get_grid_width() const;
-    std::vector<Sprite*> get_children();
+    std::vector<std::shared_ptr<Sprite>> get_children();
     void set_window_title(int fps, int score);
     void remove_child(int index);
 
@@ -33,7 +34,7 @@ private:
     std::size_t grid_width_;
     SDL_Window* sdl_window_;
     std::string title_;
-    std::vector<Sprite*> children_;
+    std::vector<std::shared_ptr<Sprite>> children_;
 };
 
 #endif

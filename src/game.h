@@ -1,6 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <memory>
+
 #include "settings.h"
 #include "window.h"
 #include "SDL.h"
@@ -19,7 +21,7 @@ private:
     bool is_running_;
     std::size_t score_;
     Settings settings_;
-    Window* root_;
+    std::shared_ptr<Window> root_;
     SDL_Renderer* sdl_renderer_;
 };
 

@@ -2,7 +2,8 @@
 
 #include "window.h"
 
-Window::Window() : height_(0), width_(0), grid_height_(0), grid_width_(0), title_("") {}
+Window::Window() : 
+    height_(0), width_(0), grid_height_(0), grid_width_(0), title_("") {}
 
 Window::Window(std::size_t height, std::size_t width, std::size_t grid_height, std::size_t grid_width, std::string title) : 
     height_(height), width_(width), grid_height_(grid_height), grid_width_(grid_width), title_(title) {
@@ -110,7 +111,7 @@ SDL_Window* Window::get_sdl_window() const {
     return sdl_window_; 
 }
 
-void Window::add_child(Sprite* sprite) {
+void Window::add_child(std::shared_ptr<Sprite> sprite) {
     children_.push_back(sprite);
 }
 
@@ -130,7 +131,7 @@ std::size_t Window::get_grid_width() const {
     return grid_width_;
 }
 
-std::vector<Sprite*> Window::get_children() {
+std::vector<std::shared_ptr<Sprite>> Window::get_children() {
     return children_;
 }
 

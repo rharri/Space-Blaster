@@ -41,15 +41,15 @@ void Enemy::did_move() {
     }
 }
 
-void Enemy::subscribe(Sprite* sprite) {
-    sprites_.push_back(sprite);
+void Enemy::subscribe(std::shared_ptr<Sprite> sprite) {
+    sprites_.emplace_back(sprite);
 }
 
 void Enemy::unsubscribe(int index) {
     sprites_.erase(sprites_.begin() + index);
 }
 
-void Enemy::set_window(Window* window) {
+void Enemy::set_window(std::shared_ptr<Window> window) {
     window_ = window;
 }
 
