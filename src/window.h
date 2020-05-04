@@ -24,6 +24,7 @@ public:
     std::size_t get_grid_width() const;
     std::vector<Sprite*> get_children();
     void set_window_title(int fps, int score);
+    void remove_child(int index);
 
 private:
     std::size_t height_;

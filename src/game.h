@@ -10,6 +10,7 @@ public:
     Game(const Settings& settings);
     ~Game();
     void run();
+    int get_score() const;
 
 private:
     void handle_input();

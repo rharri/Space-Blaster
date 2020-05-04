@@ -10,5 +10,6 @@ int main() {
     Game game{settings};
     game.run();
 
+    std::cout << "Final Score: " << game.get_score() << std::endl;
     std::cout << "Thanks for playing!" << std::endl;
 }

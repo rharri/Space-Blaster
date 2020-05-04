@@ -139,3 +139,7 @@ void Window::set_window_title(int fps, int score) {
         title_ + " FPS: " + std::to_string(fps) + " Score: " + std::to_string(score); 
     SDL_SetWindowTitle(sdl_window_, new_title.c_str());
 }
+
+void Window::remove_child(int index) {
+    children_.erase(children_.begin() + index);
+}

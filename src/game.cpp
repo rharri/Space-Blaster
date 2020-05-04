@@ -1,5 +1,6 @@
 #include "game.h"
 #include "ship.h"
+#include "enemy.h"
 
 Game::Game(const Settings& settings) : 
     settings_(settings), is_running_(true), score_(0) {
@@ -15,6 +16,12 @@ Game::Game(const Settings& settings) :
     s->set_window(root_);
     root_->add_child(s);
 
+    Enemy* e = new Enemy;
+    e->set_window(root_);
+    root_->add_child(e);
+
+    s->subscribe(e);
+
     sdl_renderer_ = SDL_CreateRenderer(
         root_->get_sdl_window(), -1, SDL_RENDERER_ACCELERATED);
 
@@ -25,6 +32,7 @@ Game::Game(const Settings& settings) :
 }
 
 Game::~Game() {
+    delete root_;
     SDL_Quit();
 }
 
@@ -35,6 +43,7 @@ void Game::run() {
     std::uint32_t frame_duration;
     auto frame_count = 0;
 
+    // Game loop
     while(is_running_) {
         frame_start = SDL_GetTicks();
 
@@ -91,12 +100,38 @@ void Game::handle_input() {
     }
 
     for (Sprite* s : root_->get_children()) {
-      s->did_move(direction);
+        s->will_move(direction);
     }
 }
 
 void Game::update() {
+    Sprite* ship;
+    int index = 0;
+    for (Sprite* s : root_->get_children()) {
+        s->did_move();
 
+        if(dynamic_cast<Ship*>(s)) {
+            ship = s;
+        }
+
+        if (!s->should_draw()) {
+            // Remove enemy from window
+            root_->remove_child(index);
+
+            // The ship no longer needs updates from this enemy
+            ship->unsubscribe(index - 1);
+
+            score_ += 10;
+
+            // Add a new enemy to the game
+            Enemy* e = new Enemy;
+            e->set_window(root_);
+            root_->add_child(e);
+
+            ship->subscribe(e);
+        }
+        index++;
+    }
 }
 
 void Game::draw() {
@@ -113,4 +148,8 @@ void Game::draw() {
   
   // Update Screen
   SDL_RenderPresent(sdl_renderer_);
+}
+
+int Game::get_score() const {
+    return score_;
 }

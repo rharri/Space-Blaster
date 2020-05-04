@@ -1,14 +1,14 @@
-#ifndef SHIP_H
-#define SHIP_H
+#ifndef ENEMY_H
+#define ENEMY_H
 
 #include <vector>
 
 #include "sprite.h"
 #include "window.h"
 
-class Ship : public Sprite {
+class Enemy : public Sprite {
 public:
-    Ship();
+    Enemy();
     void draw(SDL_Renderer* sdl_renderer) override;
     void will_move(Sprite_Attribute::Direction direction) override;
     void did_move() override;
