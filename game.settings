@@ -1,0 +1,6 @@
+width = 1024 
+height = 1024 
+fps = 60 
+ms_per_frame = 1000
+grid_height = 32
+grid_width = 32
