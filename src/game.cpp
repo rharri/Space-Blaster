@@ -116,6 +116,12 @@ void Game::update() {
             ship = s;
         }
 
+        if (!ship->should_draw()) {
+            // Ship has collided with enemy.. end the game!
+            is_running_ = false;
+            return;
+        }
+
         if (!s->should_draw()) {
             // Remove enemy from window
             root_->remove_child(index);

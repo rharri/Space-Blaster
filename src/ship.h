@@ -27,6 +27,7 @@ private:
     bool should_draw_;
     std::shared_ptr<Window> window_;
     std::vector<std::shared_ptr<Sprite>> sprites_;
+    constexpr static int kShipWidthMultiplier = 3;
 };
 
 #endif

@@ -8,7 +8,7 @@ Ship::Ship() : x_(0), y_(0), height_(0), width_(0), should_draw_(true) {}
 
 void Ship::draw(SDL_Renderer* sdl_renderer) {
     SDL_Rect block;
-    block.w = (window_->get_width() / window_->get_grid_width()) * 3;
+    block.w = (window_->get_width() / window_->get_grid_width()) * kShipWidthMultiplier;
     block.h = window_->get_height() / window_->get_grid_height();
 
     width_ = block.w;
@@ -49,8 +49,8 @@ void Ship::did_move() {
         Enemy* e = dynamic_cast<Enemy*>(s.get());
 
         if (e) {
-            if (e->get_y() > y_) {
-                // std::cout << "Collision!" << std::endl;
+            if ((e->get_x() / kShipWidthMultiplier) == x_ && e->get_y() == window_->get_grid_height()) {
+                should_draw_ = false;
             }
         }
     }

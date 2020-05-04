@@ -29,6 +29,8 @@ void Enemy::draw(SDL_Renderer* sdl_renderer) {
 
     SDL_SetRenderDrawColor(sdl_renderer, 255, 225, 0, 255);
     SDL_RenderFillRect(sdl_renderer, &block);
+
+    // std::cout << "Enemy(" << x_ << "," << y_ << ")" << std::endl;
 }
 
 void Enemy::will_move(Sprite_Attribute::Direction direction) {
