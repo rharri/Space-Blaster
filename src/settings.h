@@ -10,6 +10,7 @@ class Settings {
 public:
     Settings();
     Settings(const std::string& filename);
+    void set_ms_per_frame(std::size_t fps);
 
 private:
     void default_settings();

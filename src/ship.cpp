@@ -8,7 +8,7 @@ Ship::Ship() : x_(0), y_(0), height_(0), width_(0), should_draw_(true) {}
 
 void Ship::draw(SDL_Renderer* sdl_renderer) {
     SDL_Rect block;
-    block.w = (window_->get_width() / window_->get_grid_width()) * 4;
+    block.w = (window_->get_width() / window_->get_grid_width()) * 3;
     block.h = window_->get_height() / window_->get_grid_height();
 
     width_ = block.w;
@@ -17,17 +17,15 @@ void Ship::draw(SDL_Renderer* sdl_renderer) {
     block.x = x_ * block.w;
     block.y = window_->get_height() - block.h;
 
-    SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(sdl_renderer, 0, 127, 255, 255);
     SDL_RenderFillRect(sdl_renderer, &block);
 }
 
 void Ship::will_move(Sprite_Attribute::Direction direction) {
     switch (direction) {
         case Sprite_Attribute::Direction::up:
-            // y_ -= 1;
             break;
         case Sprite_Attribute::Direction::down:
-            // y_ += 1;
             break;
         case Sprite_Attribute::Direction::left:
             x_ -= 1;
@@ -52,7 +50,7 @@ void Ship::did_move() {
 
         if (e) {
             if (e->get_y() > y_) {
-                std::cout << "Collision!" << std::endl;
+                // std::cout << "Collision!" << std::endl;
             }
         }
     }

@@ -66,3 +66,7 @@ void Settings::default_settings() {
     grid_height_    = 32;
     grid_width_     = 32;
 }
+
+void Settings::set_ms_per_frame(std::size_t fps) {
+    ms_per_frame_ = 1000 / fps;
+}

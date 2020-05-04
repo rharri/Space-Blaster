@@ -16,11 +16,13 @@ Game::Game(const Settings& settings) :
     s->set_window(root_);
     root_->add_child(s);
 
-    Enemy* e = new Enemy;
-    e->set_window(root_);
-    root_->add_child(e);
+    for (auto i = 0; i < 8; i++) {
+        Enemy* e = new Enemy;
+        e->set_window(root_);
+        root_->add_child(e);
 
-    s->subscribe(e);
+        s->subscribe(e);
+    }
 
     sdl_renderer_ = SDL_CreateRenderer(
         root_->get_sdl_window(), -1, SDL_RENDERER_ACCELERATED);
@@ -121,7 +123,13 @@ void Game::update() {
             // The ship no longer needs updates from this enemy
             ship->unsubscribe(index - 1);
 
+            // 10 points for each enemy that passes
             score_ += 10;
+
+            // Increase game speed when score exceeds 1000
+            if (score_ > 1000) {
+                settings_.set_ms_per_frame(15);
+            }
 
             // Add a new enemy to the game
             Enemy* e = new Enemy;
