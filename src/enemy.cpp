@@ -27,7 +27,7 @@ void Enemy::draw(SDL_Renderer* sdl_renderer) {
     block.x = x_ * block.w;
     block.y = y_ * block.h;
 
-    SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 0, 255);
+    SDL_SetRenderDrawColor(sdl_renderer, 255, 225, 0, 255);
     SDL_RenderFillRect(sdl_renderer, &block);
 }
 

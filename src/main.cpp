@@ -4,8 +4,9 @@
 #include "window.h"
 #include "game.h"
 
+// Use std::atexit to call SDL_Quit to clean up resources.
+// https://en.cppreference.com/w/cpp/utility/program/atexit
 void atexit_handler() {
-    std::cout << "Exit handler" << std::endl;
     SDL_Quit();
 }
 
