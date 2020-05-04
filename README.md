@@ -13,6 +13,7 @@ player stays alive, the more their score increases. If a collision occurs with t
   * Entry point of the game
 * game.h/game.cpp
   * Manages the game loop (handling input, rendering, managing the score, etc.)
+  * The game has one root window
 * window.h/window.cpp
   * Represents a SDL window
   * Sprites are children of the window
@@ -97,4 +98,4 @@ Please note the code references listed below are not exhaustive.
 3. Compile: `cmake .. && make`
 4. Run it: `./SpaceBlaster`.
 
-**IMPORTANT**: Copy the game.settings file into the build directory before starting the SpaceBlaster.
+**IMPORTANT**: Copy the game.settings file into the build directory before starting SpaceBlaster.
